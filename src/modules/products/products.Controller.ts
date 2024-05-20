@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
 import { ProductsService } from "./products.Services";
+import { productSchema } from "./products.Validator";
 
 const createProduct = async (req: Request, res: Response) => {
   try {
     const data = req.body;
-    const result = await ProductsService.createProduct(data);
+    const validatedProduct = productSchema.parse(data);
+    const result = await ProductsService.createProduct(validatedProduct);
     res.status(201).json({
       success: true,
       message: "Product created successfully!",
@@ -60,8 +62,9 @@ const getProduct = async (req: Request, res: Response) => {
 const updateProduct = async (req: Request, res: Response) => {
   const productId = req.params.productId;
   const data = req.body;
+  const validatedProduct = productSchema.parse(data);
   try {
-     await ProductsService.updateProduct(productId, data);
+     await ProductsService.updateProduct(productId, validatedProduct);
     res.status(200).json({
       success: true,
       message: "Product updated successfully!",
