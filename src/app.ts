@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { ProductRoutes } from "./modules/products/products.Routes";
+import { OrderRoutes } from "./modules/order/order.Routes";
 // import { MovieRoutes } from "./modules/movies/movies.route";
 
 const app = express();
@@ -12,5 +13,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/products", ProductRoutes);
+app.use("/api/orders", OrderRoutes);
+
 
 export default app;
