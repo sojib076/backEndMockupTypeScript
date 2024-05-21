@@ -11,7 +11,7 @@ const createProduct = async (req: Request, res: Response) => {
     res.status(201).json({
       success: true,
       message: "Product created successfully!",
-      data: [result],
+      data: result,
     });
   } catch (err) {
     res.status(500).json({
@@ -23,7 +23,6 @@ const createProduct = async (req: Request, res: Response) => {
 
 const getProducts = async (req: Request, res: Response) => {
   const search = req.query.searchTerm as string;
-
   try {
     const result = await ProductsService.getProducts(search);
     res.status(200).json({

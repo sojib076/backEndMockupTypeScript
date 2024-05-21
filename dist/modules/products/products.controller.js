@@ -20,7 +20,7 @@ const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(201).json({
             success: true,
             message: "Product created successfully!",
-            data: [result],
+            data: result,
         });
     }
     catch (err) {

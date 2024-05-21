@@ -13,14 +13,14 @@ exports.orderService = void 0;
 const products_Model_1 = require("../products/products.Model");
 const order_Model_1 = require("./order.Model");
 const createOrder = (order) => __awaiter(void 0, void 0, void 0, function* () {
-    const orderID = order.productId;
-    const quantity = order === null || order === void 0 ? void 0 : order.quantity;
-    const result = yield order_Model_1.orderModel.create(order);
-    const product = yield products_Model_1.ProductModel.findOne({ _id: orderID });
+    const orderID = order.productId; // get the product ID from the order 
+    const quantity = order.quantity; // get the quantity from the order
+    const product = yield products_Model_1.ProductModel.findOne({ _id: orderID }); // find the product by the ID
     if (!product) {
-        throw new Error("Product not found, Please enter a valid product ID ");
+        throw new Error("Please provide a valid product ID");
     }
     else if (product && product.inventory.quantity >= quantity) {
+        const result = yield order_Model_1.orderModel.create(order); // create the order
         const newQuantity = product.inventory.quantity - quantity;
         yield products_Model_1.ProductModel.updateOne({ _id: orderID }, { $set: { "inventory.quantity": newQuantity } });
         if (newQuantity <= 0) {

@@ -4,7 +4,7 @@ exports.productSchema = exports.inventorySchema = exports.variantSchema = void 0
 const zod_1 = require("zod");
 const variantSchema = zod_1.z.object({
     type: zod_1.z.string().max(50),
-    value: zod_1.z.string().max(100)
+    value: zod_1.z.string().max(100),
 });
 exports.variantSchema = variantSchema;
 const inventorySchema = zod_1.z.object({
