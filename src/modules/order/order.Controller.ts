@@ -14,33 +14,32 @@ const createOrder = async (req: Request, res: Response) => {
     catch (e: any) {
         res.status(400).json({
             "success": false,
-            "message": "Order creation failed!",
-            error: e.message,
+            "message": e.message,
+            
         });
     }
 }
-const getOrder = async (req: Request, res: Response) => {
-    // get by email 
-    const queryEmail = req.query.email as string;
+
+const getOrders = async (req: Request, res: Response) => {
+
     try {
-        const result = await orderService.getOrder(queryEmail);
+        const result = await orderService.getOrders(req.query.email as string);
         res.status(200).json({
             "success": true,
-            "message": "Order fetched successfully!",
+            "message": "Orders fetched successfully!",
             data: result,
         })
     }
-    catch (e: any) {
+    catch (e) {
         res.status(400).json({
             "success": false,
-            "message": "Order fetch failed!",
-            error: e.message,
+            "message": "Order not found",
         });
     }
-}
 
+}
 
 export const orderController = {
     createOrder,
-    getOrder
+    getOrders
 }

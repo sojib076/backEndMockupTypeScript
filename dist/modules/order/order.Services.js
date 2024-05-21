@@ -17,7 +17,10 @@ const createOrder = (order) => __awaiter(void 0, void 0, void 0, function* () {
     const quantity = order === null || order === void 0 ? void 0 : order.quantity;
     const result = yield order_Model_1.orderModel.create(order);
     const product = yield products_Model_1.ProductModel.findOne({ _id: orderID });
-    if (product && product.inventory.quantity >= quantity) {
+    if (!product) {
+        throw new Error("Product not found, Please enter a valid product ID ");
+    }
+    else if (product && product.inventory.quantity >= quantity) {
         const newQuantity = product.inventory.quantity - quantity;
         yield products_Model_1.ProductModel.updateOne({ _id: orderID }, { $set: { "inventory.quantity": newQuantity } });
         if (newQuantity <= 0) {
@@ -26,14 +29,22 @@ const createOrder = (order) => __awaiter(void 0, void 0, void 0, function* () {
         return result;
     }
     else {
-        throw new Error(" Your order quantity is more than the available quantity");
+        throw new Error("Insufficient quantity available in inventory");
     }
 });
-const getOrder = (email) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield order_Model_1.orderModel.find({ email: email });
+const getOrders = (email) => __awaiter(void 0, void 0, void 0, function* () {
+    if (email) {
+        const result = yield order_Model_1.orderModel.find({ email });
+        console.log(result);
+        if (result.length === 0) {
+            throw new Error("Order not found");
+        }
+        return result;
+    }
+    const result = yield order_Model_1.orderModel.find({});
     return result;
 });
 exports.orderService = {
     createOrder,
-    getOrder
+    getOrders
 };

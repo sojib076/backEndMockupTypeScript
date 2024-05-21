@@ -24,31 +24,27 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     catch (e) {
         res.status(400).json({
             "success": false,
-            "message": "Order creation failed!",
-            error: e.message,
+            "message": e.message,
         });
     }
 });
-const getOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // get by email 
-    const queryEmail = req.query.email;
+const getOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield order_Services_1.orderService.getOrder(queryEmail);
+        const result = yield order_Services_1.orderService.getOrders(req.query.email);
         res.status(200).json({
             "success": true,
-            "message": "Order fetched successfully!",
+            "message": "Orders fetched successfully!",
             data: result,
         });
     }
     catch (e) {
         res.status(400).json({
             "success": false,
-            "message": "Order fetch failed!",
-            error: e.message,
+            "message": "Order not found",
         });
     }
 });
 exports.orderController = {
     createOrder,
-    getOrder
+    getOrders
 };

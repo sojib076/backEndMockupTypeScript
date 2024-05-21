@@ -15,4 +15,10 @@ app.get("/", (req, res) => {
 });
 app.use("/api/products", products_Routes_1.ProductRoutes);
 app.use("/api/orders", order_Routes_1.OrderRoutes);
+app.use((req, res) => {
+    res.status(404).send({
+        "success": false,
+        "message": "Route not found"
+    });
+});
 exports.default = app;
