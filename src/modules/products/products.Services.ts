@@ -1,11 +1,19 @@
 import { ProductModel } from "./products.Model";
+import { Tproduct } from "./products.Type";
 
-const createProduct = async (data: object) => {
+const createProduct = async (data:Tproduct) => {
   const result = await ProductModel.create(data);
   return result;
 };
 
-const getProducts = async () => {
+const getProducts = async (data:string) => {
+  if (data) {
+    const regex = new RegExp(data, "i");
+    const result = await ProductModel.find({
+      $or: [{ name: regex }, { description: regex },{category: regex}], 
+    });
+    return result;
+  }
   const result = await ProductModel.find();
   return result;
 };
@@ -22,13 +30,8 @@ const deleteProduct = async (productId: string) => {
   const result = await ProductModel.deleteOne({ _id: productId });
   return result;
 };
-const searchProducts = async (query: any) => {
-  const regex = new RegExp(query.searchTerm, "i");
-  const result = await ProductModel.find({
-    $or: [{ name: regex }, { description: regex }],
-  });
-  return result;
-};
+
+
 
 export const ProductsService = {
   createProduct,
@@ -36,5 +39,5 @@ export const ProductsService = {
   getProduct,
   updateProduct,
   deleteProduct,
-  searchProducts,
+ 
 };

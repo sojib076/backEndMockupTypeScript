@@ -18,15 +18,15 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const ValidateData = order_Validator_1.createOrderValidator.parse(data);
         const result = yield order_Services_1.orderService.createOrder(ValidateData);
         res.status(200).json({
-            "success": true,
-            "message": "Order created successfully!",
+            success: true,
+            message: "Order created successfully!",
             data: result,
         });
     }
     catch (e) {
         res.status(400).json({
-            "success": false,
-            "message": e.message,
+            success: false,
+            message: e === null || e === void 0 ? void 0 : e.message,
         });
     }
 });
@@ -34,19 +34,20 @@ const getOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield order_Services_1.orderService.getOrders(req.query.email);
         res.status(200).json({
-            "success": true,
-            "message": "Orders fetched successfully!",
+            success: true,
+            message: "Orders fetched successfully!",
             data: result,
         });
     }
     catch (e) {
+        console.log(e);
         res.status(400).json({
-            "success": false,
-            "message": "Order not found",
+            success: false,
+            message: "Order not found",
         });
     }
 });
 exports.orderController = {
     createOrder,
-    getOrders
+    getOrders,
 };

@@ -35,7 +35,6 @@ const createOrder = (order) => __awaiter(void 0, void 0, void 0, function* () {
 const getOrders = (email) => __awaiter(void 0, void 0, void 0, function* () {
     if (email) {
         const result = yield order_Model_1.orderModel.find({ email });
-        console.log(result);
         if (result.length === 0) {
             throw new Error("Order not found");
         }
@@ -46,5 +45,5 @@ const getOrders = (email) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.orderService = {
     createOrder,
-    getOrders
+    getOrders,
 };

@@ -12,17 +12,14 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello Next!");
 });
 
-
 app.use("/api/products", ProductRoutes);
 app.use("/api/orders", OrderRoutes);
 
-
 app.use((req: Request, res: Response) => {
   res.status(404).send({
-    "success": false,
-    "message": "Route not found"
-   });
+    success: false,
+    message: "Route not found",
+  });
 });
-
 
 export default app;

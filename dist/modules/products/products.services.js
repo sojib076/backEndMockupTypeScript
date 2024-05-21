@@ -12,10 +12,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductsService = void 0;
 const products_Model_1 = require("./products.Model");
 const createProduct = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(data);
     const result = yield products_Model_1.ProductModel.create(data);
     return result;
 });
-const getProducts = () => __awaiter(void 0, void 0, void 0, function* () {
+const getProducts = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    if (data) {
+        const regex = new RegExp(data, "i");
+        const result = yield products_Model_1.ProductModel.find({
+            $or: [{ name: regex }, { description: regex }, { category: regex }],
+        });
+        return result;
+    }
     const result = yield products_Model_1.ProductModel.find();
     return result;
 });
@@ -31,18 +39,18 @@ const deleteProduct = (productId) => __awaiter(void 0, void 0, void 0, function*
     const result = yield products_Model_1.ProductModel.deleteOne({ _id: productId });
     return result;
 });
-const searchProducts = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    const regex = new RegExp(query.searchTerm, "i");
-    const result = yield products_Model_1.ProductModel.find({
-        $or: [{ name: regex }, { description: regex }],
-    });
-    return result;
-});
+// const searchProducts = async (query: string) => {
+//   const regex = new RegExp(query, "i");
+//   const result = await ProductModel.find({
+//     $or: [{ name: regex }, { description: regex }],
+//   });
+//   return result;
+// };
 exports.ProductsService = {
     createProduct,
     getProducts,
     getProduct,
     updateProduct,
     deleteProduct,
-    searchProducts,
+    // searchProducts,
 };

@@ -27,13 +27,13 @@ const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(500).json({
             success: false,
             message: "Products Not Added!",
-            error: err.message,
         });
     }
 });
 const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const search = req.query.searchTerm;
     try {
-        const result = yield products_Services_1.ProductsService.getProducts();
+        const result = yield products_Services_1.ProductsService.getProducts(search);
         res.status(200).json({
             success: true,
             message: "Products fetched successfully!",
@@ -44,7 +44,6 @@ const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(500).json({
             success: false,
             message: "Products Not Found!",
-            error: err.message,
         });
     }
 });
@@ -62,7 +61,6 @@ const getProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.status(500).json({
             success: false,
             message: "Product Not Found!",
-            error: err.message,
         });
     }
 });
@@ -81,15 +79,14 @@ const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     catch (err) {
         res.status(500).json({
             success: false,
-            message: "Product Not Found!",
-            error: err.message,
+            message: "Product Not Updated !",
         });
     }
 });
 const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const productId = req.params.productId;
     try {
-        const result = yield products_Services_1.ProductsService.deleteProduct(productId);
+        yield products_Services_1.ProductsService.deleteProduct(productId);
         res.status(200).json({
             success: true,
             message: "Product deleted successfully!",
@@ -100,33 +97,28 @@ const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(500).json({
             success: false,
             message: "Product Not Found!",
-            error: err.message,
         });
     }
 });
-const searchProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const searchTerm = req.query;
-    try {
-        const result = yield products_Services_1.ProductsService.searchProducts(searchTerm);
-        res.status(200).json({
-            success: true,
-            message: "Products fetched successfully!",
-            data: result,
-        });
-    }
-    catch (err) {
-        res.status(500).json({
-            success: false,
-            message: "Products Not Found!",
-            error: err.message,
-        });
-    }
-});
+// const searchProducts = async (req: Request, res: Response) => {
+//   try {
+//     const result = await ProductsService.searchProducts(search);
+//     res.status(200).json({
+//       success: true,
+//       message: "Products fetched successfully!",
+//       data: result,
+//     });
+//   } catch (err) {
+//     res.status(500).json({
+//       success: false,
+//       message: "Products Not Found!",
+//     });
+//   }
+// };
 exports.ProductsController = {
     createProduct,
     getProducts,
     getProduct,
     updateProduct,
     deleteProduct,
-    searchProducts,
 };

@@ -1,14 +1,8 @@
-import z from 'zod';
-import { orderModel } from './order.Model';
-import { Torder } from './order.Type';
-
-
-
+import z from "zod";
 
 export const createOrderValidator = z.object({
-    email: z.string().email(),
-    productId: z.string(),
-    price: z.number(),
-    quantity: z.number()
+  email: z.string().email(),
+  productId: z.string(),
+  price: z.number(),
+  quantity: z.number(),
 });
-

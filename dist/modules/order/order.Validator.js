@@ -9,5 +9,5 @@ exports.createOrderValidator = zod_1.default.object({
     email: zod_1.default.string().email(),
     productId: zod_1.default.string(),
     price: zod_1.default.number(),
-    quantity: zod_1.default.number()
+    quantity: zod_1.default.number(),
 });

@@ -6,38 +6,39 @@ const createProduct = async (req: Request, res: Response) => {
   try {
     const data = req.body;
     const validatedProduct = productSchema.parse(data);
+
     const result = await ProductsService.createProduct(validatedProduct);
     res.status(201).json({
       success: true,
       message: "Product created successfully!",
       data: [result],
     });
-  } catch (err: any) {
+  } catch (err) {
     res.status(500).json({
       success: false,
       message: "Products Not Added!",
-      error: err.message,
     });
   }
 };
 
 const getProducts = async (req: Request, res: Response) => {
+
+  const search = req.query.searchTerm as string;
+
   try {
-    const result = await ProductsService.getProducts();
+    const result = await ProductsService.getProducts(search);
     res.status(200).json({
       success: true,
       message: "Products fetched successfully!",
       data: result,
     });
-  } catch (err: any) {
+  } catch (err) {
     res.status(500).json({
       success: false,
       message: "Products Not Found!",
-      error: err.message,
     });
   }
 };
-
 
 const getProduct = async (req: Request, res: Response) => {
   const productId = req.params.productId;
@@ -49,70 +50,66 @@ const getProduct = async (req: Request, res: Response) => {
       message: "Product fetched successfully!",
       data: result,
     });
-  } catch (err: any) {
+  } catch (err) {
     res.status(500).json({
       success: false,
       message: "Product Not Found!",
-      error: err.message,
     });
   }
 };
-
 
 const updateProduct = async (req: Request, res: Response) => {
   const productId = req.params.productId;
   const data = req.body;
   const validatedProduct = productSchema.parse(data);
   try {
-     await ProductsService.updateProduct(productId, validatedProduct);
+    await ProductsService.updateProduct(productId, validatedProduct);
     res.status(200).json({
       success: true,
       message: "Product updated successfully!",
       data: data,
     });
-  } catch (err: any) {
+  } catch (err) {
     res.status(500).json({
       success: false,
-      message: "Product Not Found!",
-      error: err.message,
+      message: "Product Not Updated !",
     });
   }
 };
 const deleteProduct = async (req: Request, res: Response) => {
   const productId = req.params.productId;
   try {
-    const result = await ProductsService.deleteProduct(productId);
+    await ProductsService.deleteProduct(productId);
     res.status(200).json({
       success: true,
       message: "Product deleted successfully!",
       data: null,
     });
-  } catch (err: any) {
+  } catch (err) {
     res.status(500).json({
       success: false,
       message: "Product Not Found!",
-      error: err.message,
     });
   }
 };
-const searchProducts = async (req: Request, res: Response) => {
-  const searchTerm = req.query;
 
-  try {
-    const result = await ProductsService.searchProducts(searchTerm);
-    res.status(200).json({
-      success: true,
-      message: "Products fetched successfully!",
-      data: result,
-    });
-  } catch (err: any) {
-    res.status(500).json({
-      success: false,
-      message: "Products Not Found!",
-      error: err.message,
-    });
-  }
-};
+// const searchProducts = async (req: Request, res: Response) => {
+  
+
+//   try {
+//     const result = await ProductsService.searchProducts(search);
+//     res.status(200).json({
+//       success: true,
+//       message: "Products fetched successfully!",
+//       data: result,
+//     });
+//   } catch (err) {
+//     res.status(500).json({
+//       success: false,
+//       message: "Products Not Found!",
+//     });
+//   }
+// };
 
 export const ProductsController = {
   createProduct,
@@ -120,5 +117,5 @@ export const ProductsController = {
   getProduct,
   updateProduct,
   deleteProduct,
-  searchProducts,
+
 };
