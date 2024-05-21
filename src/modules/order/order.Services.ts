@@ -2,7 +2,7 @@ import { ProductModel } from "../products/products.Model";
 import { orderModel } from "./order.Model";
 import { Torder } from "./order.Type";
 
-const createOrder = async (order:Torder) => {
+const createOrder = async (order: Torder) => {
   const orderID = order.productId;
   const quantity = order?.quantity;
   const result = await orderModel.create(order);
@@ -38,7 +38,6 @@ const getOrders = async (email: string) => {
   const result = await orderModel.find({});
   return result;
 };
-
 
 export const orderService = {
   createOrder,

@@ -26,7 +26,7 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     catch (e) {
         res.status(400).json({
             success: false,
-            message: e === null || e === void 0 ? void 0 : e.message,
+            message: e === null || e === void 0 ? void 0 : e.message
         });
     }
 });
@@ -40,7 +40,6 @@ const getOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     catch (e) {
-        console.log(e);
         res.status(400).json({
             success: false,
             message: "Order not found",

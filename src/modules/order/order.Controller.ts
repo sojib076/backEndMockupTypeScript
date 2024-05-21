@@ -12,15 +12,13 @@ const createOrder = async (req: Request, res: Response) => {
       message: "Order created successfully!",
       data: result,
     });
-  } catch (e : any) {
+  } catch (e: any) {
     res.status(400).json({
       success: false,
-      message: e?.message 
+      message: e?.message,
     });
   }
 };
-
-
 
 const getOrders = async (req: Request, res: Response) => {
   try {
@@ -31,7 +29,6 @@ const getOrders = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (e) {
-    
     res.status(400).json({
       success: false,
       message: "Order not found",

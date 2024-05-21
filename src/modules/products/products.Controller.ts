@@ -22,7 +22,6 @@ const createProduct = async (req: Request, res: Response) => {
 };
 
 const getProducts = async (req: Request, res: Response) => {
-
   const search = req.query.searchTerm as string;
 
   try {
@@ -94,7 +93,6 @@ const deleteProduct = async (req: Request, res: Response) => {
 };
 
 // const searchProducts = async (req: Request, res: Response) => {
-  
 
 //   try {
 //     const result = await ProductsService.searchProducts(search);
@@ -117,5 +115,4 @@ export const ProductsController = {
   getProduct,
   updateProduct,
   deleteProduct,
-
 };
