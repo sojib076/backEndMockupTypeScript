@@ -1,10 +1,12 @@
 import { orderService } from "./order.Services";
 import { Request, Response } from "express";
+import { createOrderValidator } from "./order.Validator";
 
 const createOrder = async (req: Request, res: Response) => {
     const data = req.body;
     try {
-        const result = await orderService.createOrder(data);
+        const ValidateData = createOrderValidator.parse(data);
+        const result = await orderService.createOrder(ValidateData);
         res.status(200).json({
             "success": true,
             "message": "Order created successfully!",
