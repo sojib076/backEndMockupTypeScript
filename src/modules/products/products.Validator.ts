@@ -8,6 +8,9 @@ export const variantSchema = z.object({
     quantity: z.number().int().positive(), // Positive integer
     inStock: z.boolean()
   });
+
+
+  
   
   export const productSchema = z.object({
     name: z.string().max(100) ,
