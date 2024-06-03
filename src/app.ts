@@ -1,25 +1,29 @@
-import express, { Request, Response } from "express";
-import { ProductRoutes } from "./modules/products/products.Routes";
-import { OrderRoutes } from "./modules/order/order.Routes";
+import express, { Application, Request, Response } from "express";
+import globalErrorHandler from "./middlewares/globalErrorhandler";
+import router from "./routes";
+import notFound from "./middlewares/notFound";
+
 // import { MovieRoutes } from "./modules/movies/movies.route";
 
-const app = express();
+const app: Application= express();
 
 //parsers
 app.use(express.json());
+// app.use(cors());
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello Next!");
-});
+// application routes
+app.use('/api/v1', router);
 
-app.use("/api/products", ProductRoutes);
-app.use("/api/orders", OrderRoutes);
+const test = async (req: Request, res: Response) => {
+  const a = 10;
+  res.send(a);
+};
 
-app.use((req: Request, res: Response) => {
-  res.status(404).send({
-    success: false,
-    message: "Route not found",
-  });
-});
+app.get('/', test);
+
+app.use(globalErrorHandler);
+
+//Not Found
+app.use(notFound);
 
 export default app;
